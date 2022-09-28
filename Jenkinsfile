@@ -35,7 +35,7 @@ pipeline{
         }
         stage("Build"){
             steps{
-                echo 'npm run Build'
+                sh 'npm run Build'
             }
             post{
                 always{
