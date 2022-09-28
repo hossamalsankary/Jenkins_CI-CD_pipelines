@@ -15,9 +15,4 @@ RUN npm install -f
 
 COPY . .
 
-
-
-RUN npm run start 
-
-
-CMD node server.js
+CMD npm run dev
