@@ -84,7 +84,7 @@ pipeline{
              
         success{
 
-                echo "========A executed successfully========"
+              echo "========A executed successfully========"
 
                 sh '${prams.destroyWorkflow}'
                 sh '${prams.cleanDockerDate}'
