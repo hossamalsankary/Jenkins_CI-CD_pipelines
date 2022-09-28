@@ -1,8 +1,12 @@
 pipeline{
     agent any
+    parameters{
+        string(name: 'destroyEnv', defaultValue: '$HOME', description: 'print home')    }
     stages{
         stage("install dependencies"){
             steps{
+                sh '${prams.destroyEnv}'
+                sh 'exit 1'
                 sh 'npm install -f'
             }
             post{
@@ -66,6 +70,23 @@ pipeline{
             }
         }
     }
+        stage("smoke-test"){
+            steps{
+                sh 'docker stop server'
+            }
+            post{
+                always{
+                    echo "========Done========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
+            }
+        }
+    }
     post{
         always{
             echo "========always========"
@@ -77,4 +98,3 @@ pipeline{
             echo "========pipeline execution failed========"
         }
     }
-}
