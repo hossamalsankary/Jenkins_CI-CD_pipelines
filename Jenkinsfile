@@ -1,7 +1,8 @@
 pipeline{
     agent any
     parameters{
-        string(name: 'destroyEnv', defaultValue: '$HOME', description: 'print home')    }
+        string(name: 'destroyEnv', defaultValue: '$HOME', description: 'print home') 
+           }
     stages{
         stage("install dependencies"){
             steps{
@@ -69,8 +70,7 @@ pipeline{
                 }
             }
         }
-    }
-        stage("smoke-test"){
+   stage("smoke-test"){
             steps{
                 sh 'docker stop server'
             }
@@ -98,3 +98,4 @@ pipeline{
             echo "========pipeline execution failed========"
         }
     }
+}
