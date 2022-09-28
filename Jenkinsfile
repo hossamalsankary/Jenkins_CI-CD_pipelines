@@ -51,7 +51,7 @@ pipeline{
         }
         stage("Build Docker Image"){
             steps{
-                echo 'npm run Build'
+                echo 'docker compose up -d'
             }
             post{
                 always{
