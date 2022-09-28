@@ -23,8 +23,11 @@ pipeline{
         stage("install dependencies"){
             parallel{
                     stage("install Frontend dependencies"){
+                        steps{
                         dir('./frontend'){
                             sh 'npm install -f'
+                        }
+
                         }
                     }
                     stage("install backend dependencies"){
@@ -39,8 +42,12 @@ pipeline{
           
           parallel{
             stage("Test Front end"){
+
+                steps{
+
                 dir('./frontend'){
                     sh 'npm run test'
+                }
                 }
             }
              stage("Test backend"){
@@ -56,8 +63,10 @@ pipeline{
           
           parallel{
             stage("build Front end"){
+                steps{
                 dir('./frontend'){
                     sh 'npm run build'
+                }
                 }
             }
              stage("build backend"){
