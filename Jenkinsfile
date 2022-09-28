@@ -1,22 +1,6 @@
 pipeline{
     agent any
-    parameters
-    {
-
-
-     string(
-        name: 'cleanDockerDate',
-        defaultValue: ' sh docker stop server&&docker system prune --volumes -a -f ',
-        description: 'stop container'
-        ) 
-
-     string(
-        name: 'destroyWorkflow',
-        defaultValue: " sh npm cache clean --force &&rm -rf  /var/lib/jenkins/workspace/* ",
-        description: 'stop container'
-        ) 
-
-    }
+ 
            
     stages{
         
@@ -95,14 +79,13 @@ pipeline{
         success{
 
               echo "========A executed successfully========"
-
-                 ${prams.destroyWorkflow}
-                 ${prams.cleanDockerDate}
+           sh "npm cache clean --force &&rm -rf  /var/lib/jenkins/workspace/*"
+           sh "docker stop server&&docker system prune --volumes -a -f "
         }
         failure{
             echo "========A execution failed========"          
-                 ${prams.destroyWorkflow}
-                 ${prams.cleanDockerDate}
+           sh "npm cache clean --force &&rm -rf  /var/lib/jenkins/workspace/*"
+           sh "docker stop server&&docker system prune --volumes -a -f "
         }
     }
 }
