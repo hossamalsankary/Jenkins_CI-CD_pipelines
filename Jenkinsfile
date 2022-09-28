@@ -73,12 +73,13 @@ pipeline{
             }
 
         }
-   stage("smoke-test(in dev)"){
+         stage("smoke-test(in dev)"){
             steps{
                 sh 'curl localhost:5000'
             }
     
         }
+  
     }
     post{
              
