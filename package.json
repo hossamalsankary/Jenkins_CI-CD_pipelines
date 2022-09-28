@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-	"start": "next start -p $PORT",
-	"now-build": "next build"
+    "start": "next start -p $PORT",
+    "now-build": "next build"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,9 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
+    "encoding": "^0.1.13",
     "express": "^4.17.1",
-    "isomorphic-unfetch": "^3.0.0"
+    "isomorphic-unfetch": "^3.0.0",
+    "react-jsx": "^1.0.0"
   }
 }
