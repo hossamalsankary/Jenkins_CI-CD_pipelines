@@ -1,101 +1,98 @@
 pipeline{
     agent any
-    parameters{
-        string(name: 'destroyEnv', defaultValue: '$HOME', description: 'print home') 
-           }
+    parameters
+    {
+
+
+     string(
+        name: 'cleanDockerDate',
+        defaultValue: 'docker stop server&&docker system prune --volumes -a -f ',
+        description: 'stop container'
+        ) 
+
+     string(
+        name: 'destroyWorkflow',
+        defaultValue: "npm cache clean --force &&rm -rf  /var/lib/jenkins/workspace/* ",
+        description: 'stop container'
+        ) 
+
+    }
+           
     stages{
+        
         stage("install dependencies"){
-            steps{
-                sh '${prams.destroyEnv}'
-                sh 'exit 1'
-                sh 'npm install -f'
-            }
-            post{
-                always{
-                    echo "========Done========"
+            parallel{
+                    stage("install Frontend dependencies"){
+                        dir('./frontend'){
+                            sh 'npm install -f'
+                        }
+                    }
+                    stage("install backend dependencies"){
+                        steps{
+                            sh 'npm install -f'
+                        }
+                    }
                 }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
-            }
+     
         }
         stage("Test"){
-            steps{
+          
+          parallel{
+            stage("Test Front end"){
+                dir('./frontend'){
+                    sh 'npm run test'
+                }
+            }
+             stage("Test backend"){
+                 steps{
                 echo 'I Have no test Here'
+                 }
             }
-            post{
-                always{
-                    echo "========Done========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
-            }
+          }
         }
+
+        
         stage("Build"){
-            steps{
-                sh 'npm run build'
-            }
-            post{
-                always{
-                    echo "========Done========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
+          
+          parallel{
+            stage("build Front end"){
+                dir('./frontend'){
+                    sh 'npm run build'
                 }
             }
+             stage("build backend"){
+                 steps{
+                  sh 'npm run build'
+                 }
+            }
+          }
         }
         stage("Build Docker Image"){
             steps{
                 sh 'docker compose up -d'
             }
-            post{
-                always{
-                    echo "========Done========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
-            }
+
         }
-   stage("smoke-test"){
+   stage("smoke-test(in dev)"){
             steps{
-                sh 'docker stop server'
+                sh 'curl localhost:5000'
             }
-            post{
-                always{
-                    echo "========Done========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
-            }
+    
         }
     }
     post{
-        always{
-            echo "========always========"
-        }
+             
         success{
-            echo "========pipeline executed successfully ========"
+
+                echo "========A executed successfully========"
+
+                sh '${prams.destroyWorkflow}'
+                sh '${prams.cleanDockerDate}'
         }
         failure{
-            echo "========pipeline execution failed========"
+            echo "========A execution failed========"          
+                sh '${prams.destroyWorkflow}'
+                sh '${prams.cleanDockerDate}'
         }
     }
 }
