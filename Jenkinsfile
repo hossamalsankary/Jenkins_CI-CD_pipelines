@@ -6,13 +6,13 @@ pipeline{
 
      string(
         name: 'cleanDockerDate',
-        defaultValue: 'docker stop server&&docker system prune --volumes -a -f ',
+        defaultValue: ' sh docker stop server&&docker system prune --volumes -a -f ',
         description: 'stop container'
         ) 
 
      string(
         name: 'destroyWorkflow',
-        defaultValue: "npm cache clean --force &&rm -rf  /var/lib/jenkins/workspace/* ",
+        defaultValue: " sh npm cache clean --force &&rm -rf  /var/lib/jenkins/workspace/* ",
         description: 'stop container'
         ) 
 
@@ -96,13 +96,13 @@ pipeline{
 
               echo "========A executed successfully========"
 
-                sh '${prams.destroyWorkflow}'
-                sh '${prams.cleanDockerDate}'
+                 ${prams.destroyWorkflow}
+                 ${prams.cleanDockerDate}
         }
         failure{
             echo "========A execution failed========"          
-                sh '${prams.destroyWorkflow}'
-                sh '${prams.cleanDockerDate}'
+                 ${prams.destroyWorkflow}
+                 ${prams.cleanDockerDate}
         }
     }
 }
