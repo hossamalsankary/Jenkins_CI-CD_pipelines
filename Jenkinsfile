@@ -79,12 +79,12 @@ pipeline{
         success{
 
               echo "========A executed successfully========"
-           sh "npm cache clean --force &&rm -rf  /var/lib/jenkins/workspace/*"
+           sh "rm -rf  /var/lib/jenkins/workspace/*"
            sh "docker stop server&&docker system prune --volumes -a -f "
         }
         failure{
             echo "========A execution failed========"          
-           sh "npm cache clean --force &&rm -rf  /var/lib/jenkins/workspace/*"
+           sh "rm -rf  /var/lib/jenkins/workspace/*"
            sh "docker stop server&&docker system prune --volumes -a -f "
         }
     }
