@@ -10,7 +10,7 @@ WORKDIR /opt
 COPY ["package.json", "./"]
 
 
-RUN npm install
+RUN npm install -f
 
 
 COPY . .
