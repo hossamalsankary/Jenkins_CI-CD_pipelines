@@ -79,12 +79,10 @@ pipeline{
         success{
 
               echo "========A executed successfully========"
-           sh "rm -rf  /var/lib/jenkins/workspace/*"
            sh "docker stop server&&docker system prune --volumes -a -f "
         }
         failure{
             echo "========A execution failed========"          
-           sh "rm -rf  /var/lib/jenkins/workspace/*"
            sh "docker stop server&&docker system prune --volumes -a -f "
         }
     }
