@@ -1,11 +1,14 @@
 pipeline{
-
-  agent {
-        docker { image 'node'}
+       agent {
+        docker {
+            image 'node'
+        }
     }
+ 
            
+    stages{
 
-     
+    
         
         stage("install dependencies"){
             parallel{
@@ -63,20 +66,20 @@ pipeline{
             }
           }
         }
-    //     stage("Build Docker Image"){
-    //         steps{
-    //             sh 'docker compose up -d'
-    //         }
+        stage("Build Docker Image"){
+            steps{
+                sh 'docker compose up -d'
+            }
 
-    //     }
-    //      stage("smoke-test(in dev)"){
-    //         steps{
-    //             sh 'curl localhost:5000'
-    //         }
+        }
+         stage("smoke-test(in dev)"){
+            steps{
+                sh 'curl localhost:5000'
+            }
     
-    //     }
+        }
   
-    // }
+    }
     post{
              
         success{
