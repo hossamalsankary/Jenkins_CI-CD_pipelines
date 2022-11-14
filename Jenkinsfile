@@ -16,7 +16,9 @@ pipeline{
                         steps{
                          sh "ls"   
                         dir('./frontend'){
-                            sh 'npm install -f'
+                                                     sh "ls"   
+
+                            sh 'npm install '
                         }
 
                         }
