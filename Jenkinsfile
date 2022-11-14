@@ -1,8 +1,19 @@
 pipeline{
-    agent any
+       agent {
+        docker {
+            image 'node'
+        }
+    }
  
            
     stages{
+
+        stage("install docker"){
+            steps{
+                sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
+                sh 'get-docker.sh'
+            }
+        }
         
         stage("install dependencies"){
             parallel{
