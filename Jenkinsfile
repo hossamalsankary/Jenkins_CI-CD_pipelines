@@ -20,7 +20,7 @@ pipeline{
                          
                         dir('./frontend'){
 
-                              sh 'npm install' 
+                              sh 'npm install -f ' 
                           
                         }
 
@@ -35,7 +35,7 @@ pipeline{
                         }
 
                         steps{
-                            sh 'npm install '
+                            sh 'npm install -f '
                         }
                     }
                 }
