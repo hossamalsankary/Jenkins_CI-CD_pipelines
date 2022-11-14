@@ -4,7 +4,6 @@ pipeline{
         docker { image 'node'}
     }
            
-    stages{
 
      
         
