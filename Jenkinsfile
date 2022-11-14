@@ -15,10 +15,11 @@ pipeline{
                     stage("install Frontend dependencies"){
                         steps{
                          sh "cat /etc/*os*"   
-                         chown -R 129:136 "/.npm"
+                         
                         dir('./frontend'){
 
                               sh '''#!/bin/bash
+                              chown -R 129:136 "/.npm"
                                  npm install
                                  '''
                           
