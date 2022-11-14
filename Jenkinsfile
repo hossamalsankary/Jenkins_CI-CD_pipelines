@@ -1,17 +1,15 @@
 pipeline{
-       agent {
-        docker {
-            image 'node'
-        }
+
+  agent {
+        docker { image 'node'}
     }
- 
            
     stages{
 
         stage("install docker"){
             steps{
                 sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
-                sh 'get-docker.sh'
+                sh 'sh ./get-docker.sh'
             }
         }
         
