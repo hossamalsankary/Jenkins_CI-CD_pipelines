@@ -14,6 +14,7 @@ pipeline{
             parallel{
                     stage("install Frontend dependencies"){
                         steps{
+                         sh "ls"   
                         dir('./frontend'){
                             sh 'npm install -f'
                         }
