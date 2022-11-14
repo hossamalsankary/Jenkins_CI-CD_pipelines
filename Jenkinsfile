@@ -1,10 +1,5 @@
 pipeline{
-       agent {
-        docker {
-            image 'node:16-alpine'
-            args '-u root:root'
-        }
-    }
+       agent any
  
            
     stages{
@@ -14,8 +9,14 @@ pipeline{
         stage("install dependencies"){
             parallel{
                     stage("install Frontend dependencies"){
+                            agent {
+                            docker {
+                                image 'node:16-alpine'
+                                args '-u root:root'
+                            }
+                        }
+
                         steps{
-                         sh "cat /etc/*os*"   
                          
                         dir('./frontend'){
 
@@ -26,6 +27,13 @@ pipeline{
                         }
                     }
                     stage("install backend dependencies"){
+                            agent {
+                            docker {
+                                image 'node:16-alpine'
+                                args '-u root:root'
+                            }
+                        }
+
                         steps{
                             sh 'npm install '
                         }
@@ -37,6 +45,13 @@ pipeline{
           
           parallel{
             stage("Test Front end"){
+                            agent {
+                            docker {
+                                image 'node:16-alpine'
+                                args '-u root:root'
+                            }
+                        }
+
 
                 steps{
 
@@ -46,6 +61,13 @@ pipeline{
                 }
             }
              stage("Test backend"){
+                            agent {
+                            docker {
+                                image 'node:16-alpine'
+                                args '-u root:root'
+                            }
+                        }
+
                  steps{
                 echo 'I Have no test Here'
                  }
@@ -59,12 +81,26 @@ pipeline{
           parallel{
             stage("build Front end"){
                 steps{
+                    agent {
+                    docker {
+                        image 'node:16-alpine'
+                        args '-u root:root'
+                    }
+                }
+
                 dir('./frontend'){
                     sh 'npm run build'
                 }
                 }
             }
              stage("build backend"){
+                    agent {
+                    docker {
+                        image 'node:16-alpine'
+                        args '-u root:root'
+                    }
+                }
+
                  steps{
                   sh 'npm run build'
                  }
