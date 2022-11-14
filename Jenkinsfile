@@ -19,8 +19,7 @@ pipeline{
                         dir('./frontend'){
 
                               sh '''#!/bin/bash
-                              chown -R 129:136 "/.npm"
-                                 npm install
+                                 npm install --loglevel=verbose
                                  '''
                           
                         }
