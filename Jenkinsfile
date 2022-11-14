@@ -14,7 +14,7 @@ pipeline{
             parallel{
                     stage("install Frontend dependencies"){
                         steps{
-                         sh "ls"   
+                         sh "cat /etc/*os*"   
                         dir('./frontend'){
 
                               sh '''#!/bin/bash
