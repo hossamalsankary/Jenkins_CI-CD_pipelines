@@ -6,12 +6,7 @@ pipeline{
            
     stages{
 
-        stage("install docker"){
-            steps{
-                sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
-                sh 'sh ./get-docker.sh'
-            }
-        }
+     
         
         stage("install dependencies"){
             parallel{
@@ -69,20 +64,20 @@ pipeline{
             }
           }
         }
-        stage("Build Docker Image"){
-            steps{
-                sh 'docker compose up -d'
-            }
+    //     stage("Build Docker Image"){
+    //         steps{
+    //             sh 'docker compose up -d'
+    //         }
 
-        }
-         stage("smoke-test(in dev)"){
-            steps{
-                sh 'curl localhost:5000'
-            }
+    //     }
+    //      stage("smoke-test(in dev)"){
+    //         steps{
+    //             sh 'curl localhost:5000'
+    //         }
     
-        }
+    //     }
   
-    }
+    // }
     post{
              
         success{
