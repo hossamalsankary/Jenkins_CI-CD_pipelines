@@ -1,7 +1,10 @@
 pipeline{
        agent any
- 
-           
+  environment {
+    registry = "hossamalsankary/Mynodeapp-app"
+    registryCredential = 'docker_credentials'
+    dockerImage = ''
+  }        
     stages{
 
         // stage("install dependencies"){
@@ -102,20 +105,27 @@ pipeline{
         stage("Build Docker Image"){
             steps{
 
+            script {
+                   dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
             
-              docker.withRegistry( '', 'docker_credentials' ) {
-                          sh 'docker build -t hossamalsankary/Mynodeapp-app:$GIT_COMMIT .'
-                 sh 'docker push  hossamalsankary/Mynodeapp-app:$GIT_COMMIT '
-                     }
             }
 
         }
-         stage("smoke-test(in dev)"){
-            steps{
-                sh 'curl localhost:5000'
-            }
-    
+        stage("push image"){
+               script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
         }
+
+
+        //  stage("smoke-test(in dev)"){
+        //     steps{
+        //         sh 'curl localhost:5000'
+        //     }
+    
+        // }
   
     }
     post{
