@@ -123,12 +123,13 @@ pipeline{
 
          stage("Make Sure that image run success"){
             steps{
-                sh ' docker run -d -p 5000:3000'
+
+                sh " docker run " registry : $BUILD_NUMBER " -d -p 5000:3000"
                 sh 'curl localhost:5000'
             }
     
         }
-        
+
   
     }
     post{
@@ -136,11 +137,11 @@ pipeline{
         success{
 
               echo "========A executed successfully========"
-           sh "docker stop registry + ":$BUILD_NUMBER"r&&docker system prune --volumes -a -f "
+                sh "docker stop "registry : $BUILD_NUMBER"&&docker system prune --volumes -a -f "
         }
         failure{
             echo "========A execution failed========"          
-           sh "docker stop registry + ":$BUILD_NUMBER"&&docker system prune --volumes -a -f "
+            sh "docker stop "registry : $BUILD_NUMBER"&&docker system prune --volumes -a -f "
         }
      }
 }
