@@ -134,11 +134,11 @@ pipeline{
         success{
 
               echo "========A executed successfully========"
-           sh "docker stop server&&docker system prune --volumes -a -f "
+           sh "docker stop registry + ":$BUILD_NUMBER"r&&docker system prune --volumes -a -f "
         }
         failure{
             echo "========A execution failed========"          
-           sh "docker stop server&&docker system prune --volumes -a -f "
+           sh "docker stop registry + ":$BUILD_NUMBER"&&docker system prune --volumes -a -f "
         }
      }
 }
