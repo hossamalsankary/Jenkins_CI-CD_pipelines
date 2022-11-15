@@ -133,14 +133,14 @@ pipeline{
         // }
 
         stage("Deply IAC "){
-            agent{
-                docker{
-                    image 'hashicorp/terraform'
-                }
-            }
+          
 
             steps{
-                sh 'terraform --version'
+                dir("terraform-aws-instance"){
+
+                sh 'docker run -i -t hashicorp/terraform:latest plan'
+
+                }
             }
         }
 
