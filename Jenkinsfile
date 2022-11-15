@@ -121,12 +121,14 @@ pipeline{
             }
 
 
-        //  stage("smoke-test(in dev)"){
-        //     steps{
-        //         sh 'curl localhost:5000'
-        //     }
+         stage("Make Sure that image run success"){
+            steps{
+                sh ' docker run -d -p 5000:3000'
+                sh 'curl localhost:5000'
+            }
     
-        // }
+        }
+        
   
     }
     post{
