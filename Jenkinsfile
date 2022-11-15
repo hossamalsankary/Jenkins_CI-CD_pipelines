@@ -18,9 +18,7 @@ pipeline{
                          
                         dir('./frontend'){
 
-                              sh '''#!/bin/bash
-                                 npm install 
-                                 '''
+                              sh 'npm install'
                           
                         }
 
