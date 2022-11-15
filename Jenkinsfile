@@ -124,7 +124,8 @@ pipeline{
         stage("Make Sure that image run success"){
             steps{
 
-                sh ' docker run --name $BUILD_NUMBER -d -p 5000:3000 $registry:$BUILD_NUMBER '
+                sh ' docker run --name $registry:$BUILD_NUMBER -d -p 5000:3000 $registry:$BUILD_NUMBER '
+                sh 'sleep 5'
                 sh 'curl localhost:5000'
             }
     
@@ -136,11 +137,11 @@ pipeline{
         success{
 
               echo "========A executed successfully========"
-                sh "docker stop $BUILD_NUMBER &&docker system prune --volumes -a -f "
+                sh "docker stop $registry:$BUILD_NUMBER &&docker system prune --volumes -a -f "
         }
         failure{
             echo "========A execution failed========"          
-         sh "docker stop $registry:$BUILD_NUMBER &&docker system prune --volumes -a -f "
+         sh "docker stop $registry:$BUILD_NUMBER&&docker system prune --volumes -a -f "
 
         }
      }
