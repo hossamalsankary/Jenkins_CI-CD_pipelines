@@ -107,31 +107,30 @@ pipeline{
 
             script {
                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            
+               }
             }
-
         }
+    
+
         stage("push image"){
             steps{
                 script {
-                docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push()
+                     docker.withRegistry( '', registryCredential ) {
+                            dockerImage.push()
+                     }
                 }
             }
-
-
-
-  
-    }
-         stage("Make Sure that image run success"){
+        }
+        stage("Make Sure that image run success"){
             steps{
 
                 sh ' docker run ' registry + ':' +  $BUILD_NUMBER ' -d -p 5000:3000 '
                 sh 'curl localhost:5000'
             }
     
+        
         }
+    }
     // post{
              
     //     success{
@@ -144,6 +143,6 @@ pipeline{
     //         sh "docker stop "registry : $BUILD_NUMBER"&&docker system prune --volumes -a -f "
     //     }
     //  }
+
+
 }
-    }
-    }
