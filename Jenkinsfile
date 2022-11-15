@@ -102,35 +102,49 @@ pipeline{
         //     }
         //   }
         // }
-        stage("Build Docker Image"){
-            steps{
+        // stage("Build Docker Image"){
+        //     steps{
 
-            script {
-                   dockerImage = docker.build registry + ":$BUILD_NUMBER"
-               }
-            }
-        }
+        //     script {
+        //            dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        //        }
+        //     }
+        // }
     
 
-        stage("push image"){
-            steps{
-                script {
-                     docker.withRegistry( '', registryCredential ) {
-                            dockerImage.push()
-                     }
-                }
-            }
-        }
-        stage("Make Sure that image run success"){
-            steps{
+        // stage("push image"){
+        //     steps{
+        //         script {
+        //              docker.withRegistry( '', registryCredential ) {
+        //                     dockerImage.push()
+        //              }
+        //         }
+        //     }
+        // }
+        // stage("Make Sure that image "){
+        //     steps{
 
-                sh ' docker run --name test_$BUILD_NUMBER -d -p 5000:3000 $registry:$BUILD_NUMBER '
-                sh 'sleep 5'
-                sh 'curl localhost:5000'
-            }
+        //         sh ' docker run --name test_$BUILD_NUMBER -d -p 5000:3000 $registry:$BUILD_NUMBER '
+        //         sh 'sleep 2'
+        //         sh 'curl localhost:5000'
+        //     }
     
         
+        // }
+
+        stage("Deply IAC "){
+            agent{
+                docker{
+                    image 'hashicorp/terraform'
+                }
+            }
+
+            steps{
+                sh 'terraform --version'
+            }
         }
+
+
     }
     post{
              
