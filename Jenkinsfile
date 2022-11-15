@@ -138,7 +138,7 @@ pipeline{
             steps{
                 dir("terraform-aws-instance"){
 
-                sh 'docker run -i -t hashicorp/terraform:latest plan'
+                sh 'terraform plan'
 
                 }
             }
