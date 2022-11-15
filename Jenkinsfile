@@ -11,7 +11,8 @@ pipeline{
                     steps{   
                     dir('./frontend'){
                       sh 'npm install' 
-                    }}
+                    }
+                    }
                  }
                  stage("install backend dependencies"){
                     agent {
