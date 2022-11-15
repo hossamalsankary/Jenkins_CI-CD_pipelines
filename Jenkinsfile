@@ -102,13 +102,11 @@ pipeline{
         stage("Build Docker Image"){
             steps{
 
-             docker.withRegistry('https://hub.docker.com/repository/docker/hossamalsankary/node-app', 'docker_credentials') {
-
-
-                sh 'docker build -t hossamalsankary/Mynodeapp-app:$GIT_COMMIT .'
+            
+              docker.withRegistry( '', 'docker_credentials' ) {
+                          sh 'docker build -t hossamalsankary/Mynodeapp-app:$GIT_COMMIT .'
                  sh 'docker push  hossamalsankary/Mynodeapp-app:$GIT_COMMIT '
-
-                   }
+                     }
             }
 
         }
