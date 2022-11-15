@@ -140,7 +140,8 @@ pipeline{
         }
         failure{
             echo "========A execution failed========"          
-            sh "docker stop "registry : $BUILD_NUMBER"&&docker system prune --volumes -a -f "
+         sh "docker stop $registry:$BUILD_NUMBER &&docker system prune --volumes -a -f "
+
         }
      }
 
