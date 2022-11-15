@@ -1,46 +1,30 @@
 pipeline{
        agent any
- 
-           
-    stages{
 
-    
-        
+    stages{
         stage("install dependencies"){
             parallel{
-                    stage("install Frontend dependencies"){
-                            agent {
-                            docker {
-                                image 'node:16-alpine'
-                                args '-u root:root'
-                            }
-                        }
-
-                        steps{
-                         
-                        dir('./frontend'){
-
-                              sh 'npm install -f ' 
-                          
-                        }
-
-                        }
+                stage("install Frontend dependencies"){
+                    agent {
+                        docker { image 'node:16-alpine' args '-u root:root' }
                     }
-                    stage("install backend dependencies"){
-                            agent {
-                            docker {
-                                image 'node:16-alpine'
-                                args '-u root:root'
-                            }
-                        }
-
-                        steps{
-                            sh 'npm install -f '
-                        }
+                    steps{   
+                    dir('./frontend'){
+                      sh 'npm install' 
+                    }}
+                 }
+                 stage("install backend dependencies"){
+                    agent {
+                    docker {image 'node:16-alpine' args '-u root:root' }
                     }
+               
+                steps{
+                    sh 'npm install -f '
                 }
+            }
+            }
      
-        }
+        
         stage("Test"){
           
           parallel{
@@ -80,13 +64,14 @@ pipeline{
           
           parallel{
             stage("build Front end"){
+                   agent {
+                            docker {
+                                image 'node:16-alpine'
+                            args '-u root:root'
+                            }
+                        }
+
                 steps{
-                    agent {
-                    docker {
-                        image 'node:16-alpine'
-                        args '-u root:root'
-                    }
-                }
 
                 dir('./frontend'){
                     sh 'npm run build'
@@ -94,12 +79,12 @@ pipeline{
                 }
             }
              stage("build backend"){
-                    agent {
-                    docker {
-                        image 'node:16-alpine'
-                        args '-u root:root'
-                    }
-                }
+                      agent {
+                            docker {
+                                image 'node:16-alpine'
+                                args '-u root:root'
+                            }
+                        }
 
                  steps{
                   sh 'npm run build'
@@ -107,30 +92,9 @@ pipeline{
             }
           }
         }
-        stage("Build Docker Image"){
-            steps{
-                sh 'docker compose up -d'
-            }
+   
+        }
+       
+}
 
-        }
-         stage("smoke-test(in dev)"){
-            steps{
-                sh 'curl localhost:5000'
-            }
-    
-        }
-  
-    }
-    post{
-             
-        success{
-
-              echo "========A executed successfully========"
-           sh "docker stop server&&docker system prune --volumes -a -f "
-        }
-        failure{
-            echo "========A execution failed========"          
-           sh "docker stop server&&docker system prune --volumes -a -f "
-        }
-    }
 }
