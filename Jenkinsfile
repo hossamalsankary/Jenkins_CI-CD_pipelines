@@ -4,8 +4,6 @@ pipeline{
            
     stages{
 
-    
-        
         stage("install dependencies"){
             parallel{
                     stage("install Frontend dependencies"){
@@ -103,30 +101,30 @@ pipeline{
             }
           }
         }
-        stage("Build Docker Image"){
-            steps{
-                sh 'docker compose up -d'
-            }
+//         stage("Build Docker Image"){
+//             steps{
+//                 sh 'docker compose up -d'
+//             }
 
-        }
-         stage("smoke-test(in dev)"){
-            steps{
-                sh 'curl localhost:5000'
-            }
+//         }
+//          stage("smoke-test(in dev)"){
+//             steps{
+//                 sh 'curl localhost:5000'
+//             }
     
-        }
+//         }
   
-    }
-    post{
+//     }
+//     post{
              
-        success{
+//         success{
 
-              echo "========A executed successfully========"
-           sh "docker stop server&&docker system prune --volumes -a -f "
-        }
-        failure{
-            echo "========A execution failed========"          
-           sh "docker stop server&&docker system prune --volumes -a -f "
-        }
-    }
+//               echo "========A executed successfully========"
+//            sh "docker stop server&&docker system prune --volumes -a -f "
+//         }
+//         failure{
+//             echo "========A execution failed========"          
+//            sh "docker stop server&&docker system prune --volumes -a -f "
+//         }
+//     }
 }
