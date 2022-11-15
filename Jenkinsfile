@@ -121,17 +121,17 @@ pipeline{
             }
 
 
+
+  
+    }
          stage("Make Sure that image run success"){
             steps{
 
-                sh " docker run " registry + ':' +  $BUILD_NUMBER " -d -p 5000:3000"
+                sh ' docker run ' registry + ':' +  $BUILD_NUMBER ' -d -p 5000:3000 '
                 sh 'curl localhost:5000'
             }
     
         }
-
-  
-    }
     // post{
              
     //     success{
