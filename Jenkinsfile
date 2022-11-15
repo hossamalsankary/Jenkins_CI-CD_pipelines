@@ -113,11 +113,12 @@ pipeline{
 
         }
         stage("push image"){
-               script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
+            steps{
+                script {
+                docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
+                }
+            }
 
 
         //  stage("smoke-test(in dev)"){
