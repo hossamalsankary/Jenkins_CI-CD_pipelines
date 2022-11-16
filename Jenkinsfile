@@ -6,7 +6,7 @@ pipeline{
   environment {
     registry = "hossamalsankary/node-app"
     registryCredential = 'docker_credentials'
-    ssh_key = credentials("ansible_secret_key")
+    ssh_key = credentials("ansbile_key_file")
   }        
     stages{
 
@@ -164,10 +164,8 @@ pipeline{
                 sh './get_ip.sh '
                 sh 'cat ./ansbile/deploy/inventory '
 
-        withCredentials([ sshUserPrivateKey(credentialsId: 'ansible', keyFileVariable: 'ubuntu', )]) {
-                sh ' ansible-playbook -i ./ansbile/deploy/inventory   ./ansbile/deploy/deploy_node_app.yml'
+                sh ' ansible-playbook -i ./ansbile/deploy/inventory   --private_key_file=$ansbile_key_file ./ansbile/deploy/deploy_node_app.yml'
 
-                    }
               }
               }
             }
