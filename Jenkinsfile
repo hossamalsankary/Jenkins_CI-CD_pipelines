@@ -142,7 +142,7 @@ pipeline{
 
                 sh 'terraform init'
                 sh 'terraform apply --auto-approve'
-                sh ' export instanIP=$(terraform output | cut -d " " -f 3 | tr -d " ")'
+                sh ' $instanIP=$(terraform output | cut -d " " -f 3 | tr -d " ")'
 
                 }
         }
