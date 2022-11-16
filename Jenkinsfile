@@ -4,7 +4,7 @@ pipeline{
     registry = "hossamalsankary/node-app"
     registryCredential = 'docker_credentials'
     dockerImage = ''
-    instanIP = ''
+
   }        
     stages{
 
@@ -142,7 +142,7 @@ pipeline{
 
                 sh 'terraform init'
                 sh 'terraform apply --auto-approve'
-                sh ' $instanIP=$(terraform output | cut -d " " -f 3 | tr -d " ")'
+                sh ' export instanIP=$(terraform output | cut -d " " -f 3 | tr -d " ")'
 
                 }
         }
@@ -156,7 +156,6 @@ pipeline{
           
 
             steps{
-                sh "echo -------"
                 sh "echo  $instanIP "
 
                 
