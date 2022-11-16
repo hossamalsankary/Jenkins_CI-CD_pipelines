@@ -6,7 +6,7 @@ pipeline{
   environment {
     registry = "hossamalsankary/node-app"
     registryCredential = 'docker_credentials'
-    ANSIBLE_PRIVATE_KEY=credentials('test') 
+    ANSIBLE_PRIVATE_KEY=credentials('secritfile') 
   }        
     stages{
 
@@ -163,8 +163,10 @@ pipeline{
 
                 sh './get_ip.sh '
                 sh 'cat ./ansbile/deploy/inventory '
-               sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
-   
+                // sh 'ansible-galaxy collection install -r requirements.yml'
+               sh 'ansible-playbook -i inventory/mariadb.hosts --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
+                // sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
+       
               }
               }
             }
