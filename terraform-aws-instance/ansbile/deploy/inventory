@@ -1,2 +1,0 @@
-[web]
-web"18.232.93.40" ansible_host="18.232.93.40" ansible_user=ubuntu ansible_ssh_private_key_file=/home/hoosam/key/ansible.pem
