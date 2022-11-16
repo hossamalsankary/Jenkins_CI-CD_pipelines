@@ -147,11 +147,7 @@ pipeline{
                 sh 'terraform output | cut -d " " -f 3 | tr -d " " > ip.txt'
 
 
-            script{
-                cat "ip.txt"
-                          instanIP = readFile('ip.txt').trim()
-                
-            }
+        
 
                 }
              }
@@ -162,11 +158,35 @@ pipeline{
         }
         stage("ansbile"){
             steps{
-                sh 'cat ip.txt '
+              dir("terraform-aws-instance"){
+
+                steps{
+
+                    sh 'export IP=$(terraform output | cut -d " " -f 3 | tr -d " " )'
+                    sh 'echo "[web]" > ./ansbile/deploy/inventory'
+                    sh '''
+                    for i in $IP
+                    do 
+                    echo "web${i} ansible_host=$i ansible_user=ubuntu ansible_ssh_private_key_file=/home/hoosam/key/ansible.pem" >> ./ansbile/deploy/inventory
+                    done
+                    '''
+
+                   sh ' cat ./ansbile/deploy/inventory '
+                }
+              }
             }
         }
 
-     
+     #!/bin/bash
+
+
+
+
+
+sleep 10 
+
+ansible-playbook -i /home/hoosam/ansible/ansible/inventory   /home/hoosam/ansible/ansible/configure-server.yml 
+
 
 
     }
