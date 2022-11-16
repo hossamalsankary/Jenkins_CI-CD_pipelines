@@ -137,16 +137,18 @@ pipeline{
           
 
             steps{
-                withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
-                dir("terraform-aws-instance"){
+            withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+              dir("terraform-aws-instance"){
 
                 sh 'terraform init'
                 sh 'terraform apply --auto-approve'
                 sh ' $instanIP=$(terraform output | cut -d " " -f 3 | tr -d " " ) '
 
                 }
+        }
+       
     // some block
-                }
+                
             }
         }
 
