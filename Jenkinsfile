@@ -380,12 +380,7 @@ pipeline{
            
     stages{
             stage("install Frontend dependencies"){
-                        agent {
-                                docker {
-                                    image 'node:16-alpine'
-                                    args '-u root:root'
-                                }
-                            }
+                    
                         steps{
                          sh "cat /etc/*os*"   
                          
