@@ -1,7 +1,4 @@
 ---
-# tasks file for deploy
----
-
 - name: Install WordPress, MySQL, Nginx, and PHP-FPM
   hosts: all
   gather_facts: no
