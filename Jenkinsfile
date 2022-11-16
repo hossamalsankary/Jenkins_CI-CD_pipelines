@@ -148,6 +148,7 @@ pipeline{
 
 
             script{
+                cat "ip.txt"
                           instanIP = readFile('ip.txt').trim()
                 
             }
