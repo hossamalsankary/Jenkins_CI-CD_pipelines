@@ -164,7 +164,7 @@ pipeline{
                 sh './get_ip.sh '
                 sh 'cat ./ansbile/deploy/inventory '
 
-                withCredentials([sshUserPrivateKey(credentialsId: 'ansible', keyFileVariable: ''), file(credentialsId: '', variable: ''), sshUserPrivateKey(credentialsId: 'ansible', keyFileVariable: 'ubuntu', passphraseVariable: 'server', usernameVariable: 'server')]) {
+        withCredentials([ sshUserPrivateKey(credentialsId: 'ansible', keyFileVariable: 'ubuntu', passphraseVariable: 'server', usernameVariable: 'server')]) {
                 sh ' ansible-playbook -i ./ansbile/deploy/inventory   ansbile/deploy_node_app.yml'
 
                     }
