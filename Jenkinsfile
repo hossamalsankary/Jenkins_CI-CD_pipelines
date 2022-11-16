@@ -105,19 +105,7 @@ pipeline{
             }
           }
         }
-        stage("Buil post{
-             
-        success{
-
-              echo "========A executed successfully========"
-                sh "docker stop test_$BUILD_NUMBER &&docker system prune --volumes -a -f "
-        }
-        failure{
-            echo "========A execution failed========"          
-         sh "docker stop test_$BUILD_NUMBER system prune --volumes -a -f "
-
-        }
-     }d Docker Image"){
+        stage("Build Docker Image"){
             steps{
 
             script {
