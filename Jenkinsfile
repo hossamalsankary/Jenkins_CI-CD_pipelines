@@ -145,6 +145,7 @@ pipeline{
 
                 sh 'terraform init'
                 sh 'terraform apply --auto-approve'
+        
                 env.instanIP = sh(script:'terraform output | cut -d " " -f 3 | tr -d " "')
                 }
         }
