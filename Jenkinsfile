@@ -146,10 +146,10 @@ pipeline{
                 sh 'terraform apply --auto-approve'
 
 
-            tmp_param =  sh (script: 'terraform output | cut -d " " -f 3 | tr -d " "', returnStdout: true).trim()
-            script{
-                instanIP= tmp_param
-            }
+            instanIP =  sh (script: 'terraform output | cut -d " " -f 3 | tr -d " "', returnStdout: true).trim()
+            // script{
+            //     instanIP= tmp_param
+            // }
                 }
              }
        
