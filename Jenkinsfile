@@ -1,3 +1,4 @@
+def instanIP = ''
 pipeline{
        agent any
 
@@ -146,10 +147,13 @@ pipeline{
                 sh 'terraform init'
                 sh 'terraform apply --auto-approve'
 
+
             tmp_param =  sh (script: 'terraform output | cut -d " " -f 3 | tr -d " "', returnStdout: true).trim()
-            env.instanIP= tmp_param
+            script{
+                instanIP= tmp_param
+            }
                 }
-        }
+             }
        
     // some block
                 
@@ -157,7 +161,7 @@ pipeline{
         }
         stage("ansbile"){
             steps{
-                sh 'echo hellop ${env.instanIP}'
+                sh 'echo hellop ${instanIP}'
             }
         }
 
