@@ -2,9 +2,7 @@ def instanIP = ''
 pipeline{
        agent any
 
-          parameters {
-            string(name: 'instanIP', defaultValue: '')
-        }
+  
   environment {
     registry = "hossamalsankary/node-app"
     registryCredential = 'docker_credentials'
