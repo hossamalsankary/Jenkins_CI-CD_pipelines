@@ -135,24 +135,24 @@ pipeline{
         
         // }
 
-        stage("Deply IAC "){
+    //     stage("Deply IAC "){
           
 
-            steps{
-            withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-              dir("terraform-aws-instance"){
+    //         steps{
+    //         withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+    //           dir("terraform-aws-instance"){
 
-                sh 'terraform init'
-                  sh 'terraform destroy --auto-approve'
-                sh 'terraform apply --auto-approve'
+    //             sh 'terraform init'
+    //               sh 'terraform destroy --auto-approve'
+    //             sh 'terraform apply --auto-approve'
 
-                }
-             }
+    //             }
+    //          }
        
-    // some block
+    // // some block
                 
-            }
-        }
+    //         }
+    //     }
 
      
    stage("ansbile"){
@@ -163,11 +163,8 @@ pipeline{
 
                 sh './get_ip.sh '
                 sh 'cat ./ansbile/deploy/inventory '
-                  ansiblePlaybook( 
-                    playbook: './ansbile/deploy/deploy.yml',
-                    inventory: './ansbile/deploy/inventory', 
-                    credentialsId: 'secritfile', 
-                )
+               sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
+
               }
               }
             }
