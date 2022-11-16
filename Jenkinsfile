@@ -156,6 +156,7 @@ pipeline{
           
 
             steps{
+                sh "echo -------"
                 sh "echo  $instanIP "
 
                 
