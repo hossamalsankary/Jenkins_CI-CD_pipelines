@@ -161,10 +161,10 @@ pipeline{
               dir("./terraform-aws-instance"){
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 
+sh 'echo $ANSIBLE_PRIVATE_KEY '
                 sh './get_ip.sh '
                 sh 'cat ./ansbile/deploy/inventory '
                sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy_node_app.yml'
-sh 'echo $ANSIBLE_PRIVATE_KEY '
               }
               }
             }
