@@ -164,7 +164,7 @@ pipeline{
                 sh './get_ip.sh '
                 sh 'cat ./ansbile/deploy/inventory '
                 //  sh 'ansible-galaxy collection install -r requirements.yml'
-               sh 'ansible-playbook -i inventory/mariadb.hosts --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
+               sh 'ansible-playbook -i ansbile/inventory/inventory.hosts --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/inventory/deploy.yml '
                 // sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
        
               }
