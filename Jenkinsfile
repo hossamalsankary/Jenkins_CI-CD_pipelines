@@ -158,11 +158,12 @@ pipeline{
             steps{
 
               dir("./terraform-aws-instance"){
-            
+              withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+
                    
                 sh './get_ip.sh '
                    sh ' cat ./ansbile/deploy/inventory '
-                
+              }
               }
             }
         }
