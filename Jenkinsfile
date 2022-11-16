@@ -1,34 +1,47 @@
-pipeline{
-    agent any
-    stages{
-        stage("A"){
-            steps{
-                echo "========executing A========"
+pipeline {
+  agent any
+  environment {
+    registry = "hossamalsankary/node-app"
+    registryCredential = 'docker_credentials'
+    ANSIBLE_PRIVATE_KEY = credentials('secritfile')
+  }
+  stages {
+
+    stage("install dependencies") {
+      parallel {
+        stage("install Frontend dependencies") {
+          agent {
+            docker {
+              image 'node:16-alpine'
+              args '-u root:root'
             }
-            post{
-                always{
-                    echo "========always========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
+          }
+          steps {
+            sh "cat /etc/*os*"
+
+            dir('./frontend') {
+
+              sh 'npm install'
+
             }
+
+          }
         }
+      }
     }
-    post{
-        always{
-            echo "========always========"
-        }
-        success{
-            echo "========pipeline executed successfully ========"
-        }
-        failure{
-            echo "========pipeline execution failed========"
-        }
+
+  }
+  post {
+    always {
+      echo "========always========"
     }
+    success {
+      echo "========pipeline executed successfully ========"
+    }
+    failure {
+      echo "========pipeline execution failed========"
+    }
+  }
 }
 // pipeline {
 //   agent any
@@ -38,28 +51,8 @@ pipeline{
 //     registryCredential = 'docker_credentials'
 //     ANSIBLE_PRIVATE_KEY = credentials('secritfile')
 //   }
-//   stages {
+// stages {
 
-//     stage("install dependencies") {
-//       parallel {
-//         stage("install Frontend dependencies") {
-//           agent {
-//             docker {
-//               image 'node:16-alpine'
-//               args '-u root:root'
-//             }
-//           }
-//           steps {
-//             sh "cat /etc/*os*"
-
-//             dir('./frontend') {
-
-//               sh 'npm install'
-
-//             }
-
-//           }
-//         }
 //         // stage("install backend dependencies") {
 //         //   agent {
 //         //     docker {
@@ -186,10 +179,8 @@ pipeline{
 //   //       }
 //   //     }
 
- 
-
 //   }
-   
+
 //     // post {
 
 //     //   success {
