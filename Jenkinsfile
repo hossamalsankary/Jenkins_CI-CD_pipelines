@@ -177,15 +177,14 @@ pipeline{
             }
         }
 
-     #!/bin/bash
 
 
 
 
 
-sleep 10 
 
-ansible-playbook -i /home/hoosam/ansible/ansible/inventory   /home/hoosam/ansible/ansible/configure-server.yml 
+
+# ansible-playbook -i /home/hoosam/ansible/ansible/inventory   /home/hoosam/ansible/ansible/configure-server.yml 
 
 
 
