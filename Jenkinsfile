@@ -161,7 +161,7 @@ pipeline{
         }
         stage("ansbile"){
             steps{
-                sh 'echo hellop ${instanIP}'
+                sh 'cat ip.txt '
             }
         }
 
