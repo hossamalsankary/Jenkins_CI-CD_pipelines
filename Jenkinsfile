@@ -136,8 +136,6 @@ pipeline{
         }
 
         stage("Deply IAC "){
-          
-
             steps{
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                   dir("terraform-aws-instance"){
@@ -148,7 +146,7 @@ pipeline{
             }
         }     
        
-     stage("ansbile"){
+        stage("ansbile"){
          steps{
            dir("./terraform-aws-instance"){
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -159,10 +157,10 @@ pipeline{
                }
             }
          }
-       }
+        }
    
             
-      }
+      
     }
     post{
              
@@ -179,4 +177,5 @@ pipeline{
      }
 
 
+}
 }
