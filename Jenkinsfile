@@ -231,6 +231,30 @@ pipeline {
   }
 stages {
 
+     stage("install dependencies"){
+            parallel{
+                    stage("install Frontend dependencies"){
+                     
+                        steps{
+                         sh "cat /etc/*os*"   
+                         
+                        dir('./frontend'){
+
+                              sh 'npm install'
+                          
+                        }
+
+                        }
+                    }
+                    stage("install backend dependencies"){
+                       
+                        steps{
+                            sh 'npm install -f'
+                        }
+                    }
+                }
+     
+        }
     stage("Test") {
 
       parallel {
