@@ -153,18 +153,19 @@ pipeline{
     //         }
     //     }
 
-        stage("ansbile"){
+     
+   stage("ansbile"){
             steps{
+
               dir("./terraform-aws-instance"){
-                steps{
+            
                    
                 sh './get_ip.sh '
                    sh ' cat ./ansbile/deploy/inventory '
-                }
+                
               }
             }
         }
-
 
 
     }
