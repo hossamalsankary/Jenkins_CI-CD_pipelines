@@ -29,17 +29,17 @@ pipeline {
 
           }
         }
-        stage("install backend dependencies") {
-          agent {
-            docker {
-              image 'node:16-alpine'
-              args '-u root:root'
-            }
-          }
-          steps {
-            sh 'npm install -f'
-          }
-        }
+        // stage("install backend dependencies") {
+        //   agent {
+        //     docker {
+        //       image 'node:16-alpine'
+        //       args '-u root:root'
+        //     }
+        //   }
+        //   steps {
+        //     sh 'npm install -f'
+        //   }
+        // }
       }
 
     }
@@ -159,17 +159,17 @@ pipeline {
 
   }
    
-    post {
+    // post {
 
-      success {
+    //   success {
 
-        echo "========A executed successfully========"
-        sh "docker stop test_$BUILD_NUMBER &&docker system prune --volumes -a -f "
-      }
-      failure {
-        echo "========A execution failed========"
-        sh "docker stop test_$BUILD_NUMBER system prune --volumes -a -f "
+    //     echo "========A executed successfully========"
+    //     sh "docker stop test_$BUILD_NUMBER &&docker system prune --volumes -a -f "
+    //   }
+    //   failure {
+    //     echo "========A execution failed========"
+    //     sh "docker stop test_$BUILD_NUMBER system prune --volumes -a -f "
 
-      }
-    }
+    //   }
+    // }
 }
