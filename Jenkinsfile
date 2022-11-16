@@ -1,10 +1,13 @@
 pipeline{
        agent any
+
+          parameters {
+            string(name: 'instanIP', defaultValue: '')
+        }
   environment {
     registry = "hossamalsankary/node-app"
     registryCredential = 'docker_credentials'
     dockerImage = ''
-    instanIP = ''
   }        
     stages{
 
@@ -142,8 +145,7 @@ pipeline{
 
                 sh 'terraform init'
                 sh 'terraform apply --auto-approve'
-                sh '  instanIP=$(terraform output | cut -d " " -f 3 | tr -d " ")'
-
+                env.instanIP = sh(script:'terraform output | cut -d " " -f 3 | tr -d " "')
                 }
         }
        
@@ -153,7 +155,7 @@ pipeline{
         }
         stage("ansbile"){
             steps{
-                sh 'echo hellop $instanIP'
+                sh 'echo ${env.instanIP}'
             }
         }
 
