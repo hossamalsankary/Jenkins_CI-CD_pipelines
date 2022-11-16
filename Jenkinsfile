@@ -156,10 +156,9 @@ pipeline{
           
 
             steps{
-                dir("terraform-aws-instance"){
                 sh "echo  $instanIP "
 
-                }
+                
             }
         }
 
