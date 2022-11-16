@@ -105,25 +105,25 @@ pipeline{
         //     }
         //   }
         // }
-        stage("Build Docker Image"){
-            steps{
+        // stage("Build Docker Image"){
+        //     steps{
 
-            script {
-                   dockerImage = docker.build registry + ":$BUILD_NUMBER"
-               }
-            }
-        }
+        //     script {
+        //            dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        //        }
+        //     }
+        // }
     
 
-        stage("push image"){
-            steps{
-                script {
-                     docker.withRegistry( '', registryCredential ) {
-                            dockerImage.push()
-                     }
-                }
-            }
-        }
+        // stage("push image"){
+        //     steps{
+        //         script {
+        //              docker.withRegistry( '', registryCredential ) {
+        //                     dockerImage.push()
+        //              }
+        //         }
+        //     }
+        // }
         // stage("Make Sure that image "){
         //     steps{
 
