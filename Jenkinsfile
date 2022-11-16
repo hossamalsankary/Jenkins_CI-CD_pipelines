@@ -145,7 +145,9 @@ pipeline{
 
                 sh 'terraform init'
                 sh 'terraform apply --auto-approve'
-                sh '  env.instanIP=$(terraform output | cut -d " " -f 3 | tr -d " ")'
+
+            tmp_param =  sh (script: 'terraform output | cut -d " " -f 3 | tr -d " "', returnStdout: true).trim()
+            env.instanIP= tmp_param
                 }
         }
        
