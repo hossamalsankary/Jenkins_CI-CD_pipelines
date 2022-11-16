@@ -148,7 +148,7 @@ pipeline{
 
 
             script{
-                          myVar = readFile('ip.txt').trim()
+                          instanIP = readFile('ip.txt').trim()
                 
             }
 
