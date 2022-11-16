@@ -163,7 +163,7 @@ pipeline{
 
                 sh './get_ip.sh '
                 sh 'cat ./ansbile/deploy/inventory '
-               sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=./ansbile/ansible.pem  ./ansbile/deploy/deploy_node_app.yml'
+               sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
               }
               }
             }
