@@ -165,7 +165,7 @@ pipeline{
                 sh 'cat ./ansbile/deploy/inventory '
 
         withCredentials([ sshUserPrivateKey(credentialsId: 'ansible', keyFileVariable: 'ubuntu', )]) {
-                sh ' ansible-playbook -i ./ansbile/deploy/inventory   ./ansbile/deploy_node_app.yml'
+                sh ' ansible-playbook -i ./ansbile/deploy/inventory   ./ansbile/deploy_node_app.yaml'
 
                     }
               }
