@@ -236,7 +236,6 @@ stages {
                     stage("install Frontend dependencies"){
                      
                         steps{
-                         sh "cat /etc/*os*"   
                          
                         dir('./frontend'){
 
