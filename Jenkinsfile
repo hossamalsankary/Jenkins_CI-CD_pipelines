@@ -162,7 +162,8 @@ pipeline{
 
                    
                 sh './get_ip.sh '
-                sh ' ansible-playbook -i /home/hoosam/ansible/ansible/inventory   ssh_key'
+                sh 'cat ./ansbile/deploy/inventory '
+                sh ' ansible-playbook -i ./ansbile/deploy/inventory  --private_key=$ssh_key ansbile/deploy_node_app.yml'
               }
               }
             }
