@@ -144,10 +144,12 @@ pipeline{
 
                 sh 'terraform init'
                 sh 'terraform apply --auto-approve'
+                sh 'terraform output | cut -d " " -f 3 | tr -d " " > ip.txt'
 
 
             script{
-                instanIP= terraform output | cut -d " " -f 3 | tr -d " "
+                          myVar = readFile('ip.txt').trim()
+                
             }
 
                 }
