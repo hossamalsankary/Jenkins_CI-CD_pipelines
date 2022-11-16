@@ -43,117 +43,117 @@ pipeline {
       }
 
     }
-    stage("Test") {
+  //   stage("Test") {
 
-      parallel {
-        stage("Test Front end") {
-          agent {
-            docker {
-              image 'node:16-alpine'
-              args '-u root:root'
-            }
-          }
-          steps {
+  //     parallel {
+  //       stage("Test Front end") {
+  //         agent {
+  //           docker {
+  //             image 'node:16-alpine'
+  //             args '-u root:root'
+  //           }
+  //         }
+  //         steps {
 
-            dir('./frontend') {
-              sh 'npm run test'
-            }
-          }
-        }
-        stage("Test backend") {
-          agent {
-            docker {
-              image 'node:16-alpine'
-              args '-u root:root'
-            }
-          }
-          steps {
-            echo 'I Have no test Here'
-          }
-        }
-      }
-    }
+  //           dir('./frontend') {
+  //             sh 'npm run test'
+  //           }
+  //         }
+  //       }
+  //       stage("Test backend") {
+  //         agent {
+  //           docker {
+  //             image 'node:16-alpine'
+  //             args '-u root:root'
+  //           }
+  //         }
+  //         steps {
+  //           echo 'I Have no test Here'
+  //         }
+  //       }
+  //     }
+  //   }
 
-    stage("Build") {
+  //   stage("Build") {
 
-      parallel {
-        stage("build Front end") {
-          agent {
-            docker {
-              image 'node:16-alpine'
-              args '-u root:root'
-            }
-          }
-          steps {
-            dir('./frontend') {
-              sh 'npm run build'
-            }
-          }
-        }
-        stage("build backend") {
-          agent {
-            docker {
-              image 'node:16-alpine'
-              args '-u root:root'
-            }
-          }
-          steps {
-            sh 'npm run build'
-          }
-        }
-      }
-    }
-    stage("Build Docker Image") {
-      steps {
+  //     parallel {
+  //       stage("build Front end") {
+  //         agent {
+  //           docker {
+  //             image 'node:16-alpine'
+  //             args '-u root:root'
+  //           }
+  //         }
+  //         steps {
+  //           dir('./frontend') {
+  //             sh 'npm run build'
+  //           }
+  //         }
+  //       }
+  //       stage("build backend") {
+  //         agent {
+  //           docker {
+  //             image 'node:16-alpine'
+  //             args '-u root:root'
+  //           }
+  //         }
+  //         steps {
+  //           sh 'npm run build'
+  //         }
+  //       }
+  //     }
+  //   }
+  //   stage("Build Docker Image") {
+  //     steps {
 
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
+  //       script {
+  //         dockerImage = docker.build registry + ":$BUILD_NUMBER"
+  //       }
+  //     }
+  //   }
 
-    stage("push image") {
-      steps {
-        script {
-          docker.withRegistry('', registryCredential) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-    stage("Make Sure that image ") {
-      steps {
+  //   stage("push image") {
+  //     steps {
+  //       script {
+  //         docker.withRegistry('', registryCredential) {
+  //           dockerImage.push()
+  //         }
+  //       }
+  //     }
+  //   }
+  //   stage("Make Sure that image ") {
+  //     steps {
 
-        sh ' docker run --name test_$BUILD_NUMBER -d -p 5000:3000 $registry:$BUILD_NUMBER '
-        sh 'sleep 2'
-        sh 'curl localhost:5000'
-      }
+  //       sh ' docker run --name test_$BUILD_NUMBER -d -p 5000:3000 $registry:$BUILD_NUMBER '
+  //       sh 'sleep 2'
+  //       sh 'curl localhost:5000'
+  //     }
 
-    }
+  //   }
 
-    stage("Deply IAC ") {
-      steps {
-        withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-          dir("terraform-aws-instance") {
-            sh 'terraform init'
-            sh 'terraform destroy --auto-approve'
-            sh 'terraform apply --auto-approve'
-          }
-        }
-      }
-    }
-      stage("ansbile") {
-        steps {
-          dir("./terraform-aws-instance") {
-            withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+  //   stage("Deply IAC ") {
+  //     steps {
+  //       withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+  //         dir("terraform-aws-instance") {
+  //           sh 'terraform init'
+  //           sh 'terraform destroy --auto-approve'
+  //           sh 'terraform apply --auto-approve'
+  //         }
+  //       }
+  //     }
+  //   }
+  //     stage("ansbile") {
+  //       steps {
+  //         dir("./terraform-aws-instance") {
+  //           withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 
-              sh 'ansible-playbook -i ansbile/inventory/inventory --extra-vars ansible_ssh_host=$(terraform output  -raw server_ip) --extra-vars  IMAGE_NAME="{{$registry:$BUILD_NUMBER}}" --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/inventory/deploy.yml '
-              // sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
+  //             sh 'ansible-playbook -i ansbile/inventory/inventory --extra-vars ansible_ssh_host=$(terraform output  -raw server_ip) --extra-vars  IMAGE_NAME="{{$registry:$BUILD_NUMBER}}" --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/inventory/deploy.yml '
+  //             // sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
 
-            }
-          }
-        }
-      }
+  //           }
+  //         }
+  //       }
+  //     }
 
  
 
