@@ -151,11 +151,8 @@ pipeline{
        
     // some block
                 
-            }
-        }
-
-     
-   stage("ansbile"){
+            }}
+             stage("ansbile"){
             steps{
 
               dir("./terraform-aws-instance"){
@@ -164,11 +161,11 @@ pipeline{
                sh 'ansible-playbook -i ansbile/inventory/inventory --extra-vars ansible_ssh_host=$(terraform output  -raw server_ip) --extra-vars  IMAGE_NAME="{{$registry:$BUILD_NUMBER}}" --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/inventory/deploy.yml '
                 // sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
        
-              }
+               }
               }
             }
         }
-
+            }
 
     }
     post{
@@ -186,4 +183,4 @@ pipeline{
      }
 
 
-}
+
