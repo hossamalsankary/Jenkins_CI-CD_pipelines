@@ -135,31 +135,27 @@ pipeline{
         
         // }
 
-        stage("Deply IAC "){
+    //     stage("Deply IAC "){
           
 
-            steps{
-            withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-              dir("terraform-aws-instance"){
+    //         steps{
+    //         withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+    //           dir("terraform-aws-instance"){
 
-                sh 'terraform init'
-                sh 'terraform apply --auto-approve'
-                sh 'terraform output | cut -d " " -f 3 | tr -d " " > ip.txt'
+    //             sh 'terraform init'
+    //             sh 'terraform apply --auto-approve'
 
-
-        
-
-                }
-             }
+    //             }
+    //          }
        
-    // some block
+    // // some block
                 
-            }
-        }
+    //         }
+    //     }
+
         stage("ansbile"){
             steps{
-              dir("terraform-aws-instance"){
-
+              dir("./terraform-aws-instance"){
                 steps{
                    
                 sh './get_ip.sh '
@@ -168,7 +164,6 @@ pipeline{
               }
             }
         }
-
 
 
 
