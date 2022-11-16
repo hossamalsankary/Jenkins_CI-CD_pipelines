@@ -146,7 +146,7 @@ pipeline{
                     sh 'terraform apply --auto-approve'
                 }
             }
-             
+        }     
        
      stage("ansbile"){
          steps{
@@ -161,8 +161,8 @@ pipeline{
          }
        }
    
-            }
-        }
+            
+      }
     }
     post{
              
