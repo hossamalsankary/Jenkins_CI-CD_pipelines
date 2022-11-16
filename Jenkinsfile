@@ -139,7 +139,7 @@ pipeline{
             steps{
                 dir("terraform-aws-instance"){
 
-                sh 'terraform destroy --auto-approve'
+                sh 'terraform init'
                 sh 'terraform apply --auto-approve'
                 sh ' $instanIP=$(terraform output | cut -d " " -f 3 | tr -d " " ) '
 
