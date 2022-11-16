@@ -4,7 +4,7 @@ pipeline{
     registry = "hossamalsankary/node-app"
     registryCredential = 'docker_credentials'
     dockerImage = ''
-    instanIP
+    instanIP = ''
   }        
     stages{
 
