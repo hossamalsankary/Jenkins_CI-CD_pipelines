@@ -6,7 +6,7 @@ pipeline{
   environment {
     registry = "hossamalsankary/node-app"
     registryCredential = 'docker_credentials'
-    dockerImage = ''
+    ssh_key = credentials("ansible_secret_key")
   }        
     stages{
 
@@ -162,7 +162,7 @@ pipeline{
 
                    
                 sh './get_ip.sh '
-                   sh ' cat ./ansbile/deploy/inventory '
+                sh ' ansible-playbook -i /home/hoosam/ansible/ansible/inventory   ssh_key'
               }
               }
             }

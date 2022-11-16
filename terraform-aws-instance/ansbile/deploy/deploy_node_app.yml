@@ -13,6 +13,6 @@
     - ansible_host_key_checking: false
     
   roles:
-    - ilovenano
+    - deploy
 
     # 7.6.1810 ansible -m setup localhost | grep distribution_version
