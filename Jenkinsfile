@@ -1,7 +1,18 @@
 // def instanIP = ''
 // pipeline{
 //        agent any
-
+pipeline {
+    agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
   
 //   environment {
 //     registry = "hossamalsankary/node-app"
@@ -374,24 +385,24 @@
 // //     // }
 // // }
 
-pipeline{
-       agent any
+// pipeline{
+//        agent any
  
            
-    stages{
-            stage("install Frontend dependencies"){
+//     stages{
+//             stage("install Frontend dependencies"){
                     
-                        steps{
-                         sh "cat /etc/*os*"   
+//                         steps{
+//                          sh "cat /etc/*os*"   
                          
-                        dir('./frontend'){
+//                         dir('./frontend'){
 
-                              sh 'npm install'
+//                               sh 'npm install'
                           
-                        }
+//                         }
 
-                        }
-                    }
+//                         }
+//                     }
 
         // stage("install dependencies"){
         //     parallel{
@@ -513,5 +524,5 @@ pipeline{
 //             echo "========A execution failed========"          
 //            sh "docker stop server&&docker system prune --volumes -a -f "
 //         }
-     }
-}
+//      }
+// }
