@@ -4,6 +4,7 @@ pipeline{
     registry = "hossamalsankary/node-app"
     registryCredential = 'docker_credentials'
     dockerImage = ''
+    instanIP = ''
   }        
     stages{
 
@@ -138,7 +139,20 @@ pipeline{
             steps{
                 dir("terraform-aws-instance"){
 
-                sh 'terraform plan'
+                sh 'terraform destroy --auto-approve'
+                sh 'terraform apply --auto-approve'
+                sh ' $instanIP=$(terraform output | cut -d " " -f 3 | tr -d " " ) '
+
+                }
+            }
+        }
+
+        stage("anslie "){
+          
+
+            steps{
+                dir("terraform-aws-instance"){
+                sh "echo  $instanIP "
 
                 }
             }
