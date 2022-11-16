@@ -145,8 +145,7 @@ pipeline{
 
                 sh 'terraform init'
                 sh 'terraform apply --auto-approve'
-        
-                env.instanIP = sh(script:'terraform output | cut -d " " -f 3 | tr -d " "')
+                sh '  env.instanIP=$(terraform output | cut -d " " -f 3 | tr -d " ")'
                 }
         }
        
@@ -156,7 +155,7 @@ pipeline{
         }
         stage("ansbile"){
             steps{
-                sh 'echo ${env.instanIP}'
+                sh 'echo hellop ${env.instanIP}'
             }
         }
 
