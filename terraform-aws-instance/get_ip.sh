@@ -1,5 +1,5 @@
 #! /bin/bash
-
+terraform plan --auto-approve
 export IP=$(terraform output | cut -d " " -f 3 | tr -d " " )
 echo "[web]" > ./ansbile/deploy/inventory
 
