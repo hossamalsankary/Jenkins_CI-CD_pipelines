@@ -135,24 +135,24 @@ pipeline{
         
         // }
 
-    //     stage("Deply IAC "){
+        stage("Deply IAC "){
           
 
-    //         steps{
-    //         withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-    //           dir("terraform-aws-instance"){
+            steps{
+            withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+              dir("terraform-aws-instance"){
 
-    //               sh 'terraform init'
-    //               sh 'terraform destroy --auto-approve'
-    //              sh 'terraform apply --auto-approve'
+                  sh 'terraform init'
+                  sh 'terraform destroy --auto-approve'
+                 sh 'terraform apply --auto-approve'
 
-    //             }
-    //          }
+                }
+             }
        
-    // // some block
+    // some block
                 
-    //         }
-    //     }
+            }
+        }
 
      
    stage("ansbile"){
@@ -161,9 +161,6 @@ pipeline{
               dir("./terraform-aws-instance"){
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 
-                // sh './get_ip.sh '
-                // sh 'cat ./ansbile/deploy/inventory '
-                //  sh 'ansible-galaxy collection install -r requirements.yml'
                sh 'ansible-playbook -i ansbile/inventory/inventory --extra-vars ansible_ssh_host=$(terraform output  -raw server_ip) --extra-vars  IMAGE_NAME="hossamalsankary/node-app:120" --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/inventory/deploy.yml '
                 // sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
        
