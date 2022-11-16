@@ -180,14 +180,6 @@ pipeline{
 
 
 
-
-
-
-
-# ansible-playbook -i /home/hoosam/ansible/ansible/inventory   /home/hoosam/ansible/ansible/configure-server.yml 
-
-
-
     }
     // post{
              
