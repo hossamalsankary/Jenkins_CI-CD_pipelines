@@ -163,9 +163,13 @@ pipeline{
 
                 sh './get_ip.sh '
                 sh 'cat ./ansbile/deploy/inventory '
-               sh 'ansible-playbook -i ./ansbile/deploy/inventory   --private-key=$ANSIBLE_PRIVATE_KEY ./ansbile/deploy/deploy.yml'
 
               }
+                ansiblePlaybook( 
+                playbook: './ansbile/deploy/deploy.yml',
+                inventory: './ansbile/deploy/inventory', 
+                credentialsId: 'secritfile', 
+            )
               }
             }
         }
