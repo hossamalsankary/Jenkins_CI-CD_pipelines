@@ -163,18 +163,15 @@ pipeline{
 
                 sh './get_ip.sh '
                 sh 'cat ./ansbile/deploy/inventory '
-                  ansiblePlaybook('./ansbile/deploy/deploy.yml') {
-                    inventoryPath('./ansbile/deploy/inventory')
-                    tags('one,two')
-                    credentialsId('secritfile')
-                    become(true)
-                    becomeUser("ubuntu")
-                
-                }
 
               }
-              
-          
+                ansiblePlaybook( 
+                playbook: './ansbile/deploy/deploy.yml',
+                inventory: './ansbile/deploy/inventory', 
+                credentialsId: 'test', 
+                
+            )
+            
               }
             }
         }
